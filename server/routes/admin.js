@@ -114,7 +114,6 @@ router.get('/otps', verifyToken, requireRole('admin'), async (req, res) => {
 
 // GET /api/admin/dashboard — legacy route for backward compat
 router.get('/dashboard', verifyToken, requireRole('admin'), async (req, res) => {
-  const today = new Date().toISOString().split('T')[0];
   const [visitors, alerts, pending, users] = await Promise.all([
     supabaseAdmin.from('visitors').select('id', { count: 'exact' }),
     supabaseAdmin.from('alerts').select('id', { count: 'exact' }).eq('resolved', false),

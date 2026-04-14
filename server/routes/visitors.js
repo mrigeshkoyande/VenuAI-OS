@@ -41,7 +41,7 @@ router.get('/:id', verifyToken, async (req, res) => {
 
 // POST /api/visitors — guard logs a new visitor
 router.post('/', verifyToken, requireRole('guard'), async (req, res) => {
-  const { name, phone, purpose, target_flat, target_resident_id, photo_url, trust_score, trust_level, captured_at, captured_by_guard_id } = req.body;
+  const { name, phone, purpose, target_flat, target_resident_id, photo_url, trust_score, trust_level, captured_at, captured_by_guard_id: _captured_by_guard_id } = req.body;
   if (!name || !target_flat) return res.status(400).json({ error: 'name and target_flat are required' });
 
   const score = trust_score ?? Math.floor(Math.random() * 60) + 40;
@@ -92,7 +92,7 @@ router.post('/', verifyToken, requireRole('guard'), async (req, res) => {
 
   // High-risk alert
   if (level === 'High') {
-    const { data: newAlert } = await supabaseAdmin.from('alerts').insert({
+    const { data: _newAlert } = await supabaseAdmin.from('alerts').insert({
       type: 'face_mismatch', title: 'High Risk Visitor Detected',
       severity: 'high', visitor_id: visitor.id, location: 'Main Gate', read: false, resolved: false,
     }).select().single();

@@ -46,7 +46,6 @@ router.post('/', verifyToken, requireRole('guard', 'admin'), async (req, res) =>
 
 // GET /api/checkpoints/active — visitors currently in transit w/ countdown
 router.get('/active', verifyToken, async (req, res) => {
-  const now = new Date().toISOString();
 
   // Get tracking visitors
   const { data: visitors, error } = await supabaseAdmin

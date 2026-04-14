@@ -55,7 +55,7 @@ async function verifyFirebaseOnly(req, res, next) {
     const decoded = await admin.auth().verifyIdToken(token);
     req.firebaseUser = { uid: decoded.uid, email: decoded.email };
     next();
-  } catch (err) {
+  } catch (_err) {
     return res.status(401).json({ error: 'Invalid or expired Firebase token' });
   }
 }
@@ -87,7 +87,7 @@ async function verifyToken(req, res, next) {
     }
     req.user = data;
     next();
-  } catch (err) {
+  } catch (_err) {
     return res.status(401).json({ error: 'Invalid or expired token' });
   }
 }

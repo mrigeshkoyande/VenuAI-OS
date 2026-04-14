@@ -25,7 +25,7 @@ router.post('/upload', verifyToken, requireRole('guard', 'admin'), upload.single
   const ext      = req.file.mimetype.split('/')[1];
   const filename = `visitors/${uuidv4()}.${ext}`;
 
-  const { data, error } = await supabaseAdmin.storage
+  const { data: _data, error } = await supabaseAdmin.storage
     .from('visitor-photos')
     .upload(filename, req.file.buffer, {
       contentType: req.file.mimetype,

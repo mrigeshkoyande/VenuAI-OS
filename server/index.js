@@ -1,6 +1,5 @@
 const express = require('express');
 const cors    = require('cors');
-const multer  = require('multer');
 const path    = require('path');
 require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 
@@ -79,13 +78,16 @@ app.get('/.well-known/*', (req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
 
-// ── Catch-all 404 handler ───────────────────────────────────
-app.use((req, res) => {
-  res.status(404).json({ error: 'Route not found' });
+// ── Static Files (React Frontend) ───────────────────────────
+app.use(express.static(path.join(__dirname, '../dist')));
+
+// ── Catch-all 404 & SPA handler ─────────────────────────────
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 // ── Global error handler ────────────────────────────────────
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   console.error('Unhandled error:', err);
   res.status(500).json({ error: err.message || 'Internal server error' });
 });

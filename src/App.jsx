@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import HomeDashboard from './pages/HomeDashboard';
 import GoalFoodInput from './pages/GoalFoodInput';
 import NearbyHealthyOptions from './pages/NearbyHealthyOptions';
